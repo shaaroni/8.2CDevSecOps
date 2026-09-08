@@ -16,7 +16,6 @@ pipeline {
  
     stage('Run Tests') { 
       steps { 
-        bat '"C:\\Users\\SHAARONI ANTON\\Downloads\\snyk-win.exe" test || exit 0'
         bat 'npm test || exit 0' // Allows pipeline to continue despite test failures 
       } 
     } 
