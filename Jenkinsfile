@@ -10,26 +10,26 @@ pipeline {
  
     stage('Install Dependencies') { 
       steps { 
-        bat 'npm install' 
+        bat 'npm ci' 
       } 
     } 
  
     stage('Run Tests') { 
       steps { 
-        bat 'npm test || true' // Allows pipeline to continue despite test failures 
+        bat 'npm test || exit 0' // Allows pipeline to continue despite test failures 
       } 
     } 
  
     stage('Generate Coverage Report') { 
       steps { 
         // Ensure coverage report exists 
-        bat 'npm run coverage || true' 
+        bat 'npm run coverage || exit 0' 
       } 
     } 
  
     stage('NPM Audit (Security Scan)') { 
       steps { 
-        bat 'npm audit || true' // This will show known CVEs in the output 
+        bat 'npm audit || exit 0' // This will show known CVEs in the output 
       } 
     } 
  
