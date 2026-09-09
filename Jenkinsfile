@@ -42,18 +42,14 @@ pipeline {
       steps {
         withCredentials([string(credentialsId: 'SONAR_TOKEN', variable: 'SONAR_TOKEN')]) {
           bat '''
-            echo JAVA_HOME=%JAVA_HOME%
-            where java
-            "%JAVA_HOME%\\bin\\java.exe" -version
-            curl -L -o sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-5.0.1.3006-windows.zip
-            if exist sonar-scanner-5.0.1.3006-windows rmdir /S /Q sonar-scanner-5.0.1.3006-windows
+            curl -L -o sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-8.0.1-windows-x64.zip
+            if exist sonar-scanner-8.0.1-windows-x64 rmdir /S /Q sonar-scanner-8.0.1-windows-x64
             powershell -Command "Expand-Archive -Path sonar-scanner.zip -DestinationPath . -Force"
-            set "PATH=%JAVA_HOME%\\bin;%PATH%"
-            sonar-scanner-5.0.1.3006-windows\\bin\\sonar-scanner ^
+            sonar-scanner-8.0.1-windows-x64\\bin\\sonar-scanner.bat ^
               -Dsonar.projectKey=shaaroni_8.2CDevSecOps ^
               -Dsonar.organization=shaaroni ^
               -Dsonar.host.url=https://sonarcloud.io ^
-              -Dsonar.login=%SONAR_TOKEN%
+              -Dsonar.token=%SONAR_TOKEN%
           '''
         }
       }
