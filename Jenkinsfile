@@ -20,7 +20,7 @@ pipeline {
       steps { 
         withCredentials([string(credentialsId: 'SNYK_TOKEN', variable: 'SNYK_TOKEN')]) {
           bat "snyk auth %SNYK_TOKEN%"
-          bat 'npm test || exit 0' // Allows pipeline to continue despite test failures 
+          bat 'npm test || exit 0' // continue even if tests fail
         }
       } 
     } 
@@ -42,7 +42,8 @@ pipeline {
         withCredentials([string(credentialsId: 'SONAR_TOKEN', variable: 'SONAR_TOKEN')]) {
           bat '''
             curl -L -o sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-5.0.1.3006-windows.zip
-            powershell -Command "Expand-Archive sonar-scanner.zip -DestinationPath ."
+            rmdir /S /Q sonar-scanner-5.0.1.3006-windows
+            powershell -Command "Expand-Archive -Path sonar-scanner.zip -DestinationPath . -Force"
             .\\sonar-scanner-5.0.1.3006-windows\\bin\\sonar-scanner ^
               -Dsonar.projectKey=shaaroni_8.2CDevSecOps ^
               -Dsonar.organization=shaaroni ^
@@ -54,4 +55,3 @@ pipeline {
     }
   } 
 }
-
