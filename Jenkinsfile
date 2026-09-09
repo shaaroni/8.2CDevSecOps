@@ -16,6 +16,8 @@ pipeline {
  
     stage('Run Tests') { 
       steps { 
+       withCredentials([string(credentialsId: 'SNYK_TOKEN', variable: 'SNYK_TOKEN')]) {
+        bat "snyk auth %SNYK_TOKEN%"
         bat 'npm test || exit 0' // Allows pipeline to continue despite test failures 
       } 
     } 
