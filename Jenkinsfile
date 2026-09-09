@@ -59,7 +59,7 @@ The Jenkins build log is attached.""",
             post {
                 always {
                     emailext(
-                        to: 'YOUR_EMAIL@gmail.com',
+                        to: 'antonuthayakumarshaaroni@gmail.com',
                         subject: "NPM Audit - ${currentBuild.currentResult} - Build #${env.BUILD_NUMBER}",
                         body: """NPM Audit (Security Scan) stage completed.
 
