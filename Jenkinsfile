@@ -31,7 +31,7 @@ pipeline {
             post {
                 always {
                     emailext(
-                        to: 'YOUR_EMAIL@gmail.com',
+                        to: 'antonuthayakumarshaaroni@gmail.com',
                         subject: "Run Tests - ${currentBuild.currentResult} - Build #${env.BUILD_NUMBER}",
                         body: """Run Tests stage completed.
 
