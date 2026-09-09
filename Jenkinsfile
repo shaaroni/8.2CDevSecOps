@@ -28,6 +28,22 @@ pipeline {
                     bat 'snyk test --auth-token=%SNYK_TOKEN% || exit /b 0'
                 }
             }
+            post {
+                always {
+                    emailext(
+                        to: 'YOUR_EMAIL@gmail.com',
+                        subject: "Run Tests - ${currentBuild.currentResult} - Build #${env.BUILD_NUMBER}",
+                        body: """Run Tests stage completed.
+
+Job: ${env.JOB_NAME}
+Build: #${env.BUILD_NUMBER}
+Status: ${currentBuild.currentResult}
+
+The Jenkins build log is attached.""",
+                        attachLog: true
+                    )
+                }
+            }
         }
 
         stage('Generate Coverage Report') {
@@ -39,6 +55,22 @@ pipeline {
         stage('NPM Audit (Security Scan)') {
             steps {
                 bat 'npm audit || exit /b 0'
+            }
+            post {
+                always {
+                    emailext(
+                        to: 'YOUR_EMAIL@gmail.com',
+                        subject: "NPM Audit - ${currentBuild.currentResult} - Build #${env.BUILD_NUMBER}",
+                        body: """NPM Audit (Security Scan) stage completed.
+
+Job: ${env.JOB_NAME}
+Build: #${env.BUILD_NUMBER}
+Status: ${currentBuild.currentResult}
+
+The Jenkins build log is attached.""",
+                        attachLog: true
+                    )
+                }
             }
         }
 
